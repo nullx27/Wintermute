@@ -7,5 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "wintermute")
 data class Properties(
     var discordToken: String = "",
-    var youtubeToken: String = ""
+    var youtubeToken: String = "",
+    var wolframAlphaKey: String = ""
 )

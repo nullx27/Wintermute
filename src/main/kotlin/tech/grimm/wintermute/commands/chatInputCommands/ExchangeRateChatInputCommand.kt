@@ -1,4 +1,4 @@
-package tech.grimm.wintermute.commands
+package tech.grimm.wintermute.commands.chatInputCommands
 
 import discord4j.core.`object`.command.ApplicationCommandInteractionOption
 import discord4j.core.`object`.command.ApplicationCommandInteractionOptionValue
@@ -70,7 +70,8 @@ import java.time.Instant
         Choice("United States Dollar", "USD")
     ])
 ])
-class ExchangeRateCommand(private val exchangeRateService: ExchangeRateService): Command {
+class ExchangeRateChatInputCommand(private val exchangeRateService: ExchangeRateService):
+    tech.grimm.wintermute.commands.ChatInputCommand {
 
     override fun handle(event: ChatInputInteractionEvent): Mono<Void> {
 

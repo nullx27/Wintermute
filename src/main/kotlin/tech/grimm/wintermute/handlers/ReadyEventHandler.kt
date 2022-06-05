@@ -17,7 +17,7 @@ class ReadyEventHandler(private val commandRegistry: CommandRegistry) :
 
     override fun handle(event: ReadyEvent, client: RestClient): Mono<Void> {
 
-        if (!commandRegistry.loaded) commandRegistry.loadCommands()
+        commandRegistry.loadCommands()
 
         client.applicationId.block()?.let {
             client.applicationService.bulkOverwriteGuildApplicationCommand(

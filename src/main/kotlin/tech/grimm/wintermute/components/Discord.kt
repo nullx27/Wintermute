@@ -6,6 +6,7 @@ import discord4j.core.`object`.presence.ClientActivity
 import discord4j.core.`object`.presence.ClientPresence
 import discord4j.core.event.domain.Event
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
+import discord4j.core.event.domain.interaction.MessageInteractionEvent
 import discord4j.core.event.domain.lifecycle.ReadyEvent
 import discord4j.gateway.intent.IntentSet
 import discord4j.rest.RestClient
@@ -14,13 +15,15 @@ import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import tech.grimm.wintermute.handlers.ChatInputInteractionHandler
 import tech.grimm.wintermute.handlers.Handler
+import tech.grimm.wintermute.handlers.MessageInteractionHandler
 import tech.grimm.wintermute.handlers.ReadyEventHandler
 import tech.grimm.wintermute.utils.LoggerDelegate
 
 @Component
 class Discord(
     private val chatInputInteractionHandler: ChatInputInteractionHandler,
-    private val readyEventHandler: ReadyEventHandler
+    private val readyEventHandler: ReadyEventHandler,
+    private val messageInteractionHandler: MessageInteractionHandler
 ) {
 
     private val logger by LoggerDelegate()
@@ -45,6 +48,7 @@ class Discord(
 
         registerHandler(ReadyEvent::class.java, client, readyEventHandler)
         registerHandler(ChatInputInteractionEvent::class.java, client, chatInputInteractionHandler)
+        registerHandler(MessageInteractionEvent::class.java, client, messageInteractionHandler)
 
         client.onDisconnect().block()
 

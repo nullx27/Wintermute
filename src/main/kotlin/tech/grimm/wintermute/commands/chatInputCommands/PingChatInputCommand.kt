@@ -1,4 +1,4 @@
-package tech.grimm.wintermute.commands
+package tech.grimm.wintermute.commands.chatInputCommands
 
 import discord4j.core.`object`.command.ApplicationCommandOption
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
@@ -13,7 +13,7 @@ import tech.grimm.wintermute.utils.LoggerDelegate
     "Ping/Pong Command",
     options = [Option("Pong", "test", ApplicationCommandOption.Type.STRING, true, [Choice("Pong", "pong")])]
 )
-class PingCommand : Command {
+class PingChatInputCommand : tech.grimm.wintermute.commands.ChatInputCommand {
     private val logger by LoggerDelegate()
 
 
