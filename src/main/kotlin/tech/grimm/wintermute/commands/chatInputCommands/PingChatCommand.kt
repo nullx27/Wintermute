@@ -6,6 +6,7 @@ import reactor.core.publisher.Mono
 import tech.grimm.wintermute.annotations.ChatInputCommand
 import tech.grimm.wintermute.annotations.Choice
 import tech.grimm.wintermute.annotations.Option
+import tech.grimm.wintermute.commands.ChatCommand
 import tech.grimm.wintermute.utils.LoggerDelegate
 
 @ChatInputCommand(
@@ -13,7 +14,7 @@ import tech.grimm.wintermute.utils.LoggerDelegate
     "Ping/Pong Command",
     options = [Option("Pong", "test", ApplicationCommandOption.Type.STRING, true, [Choice("Pong", "pong")])]
 )
-class PingChatInputCommand : tech.grimm.wintermute.commands.ChatInputCommand {
+class PingChatCommand : ChatCommand {
     private val logger by LoggerDelegate()
 
 

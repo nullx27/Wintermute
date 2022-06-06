@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono
 import tech.grimm.wintermute.annotations.ChatInputCommand
 import tech.grimm.wintermute.annotations.Choice
 import tech.grimm.wintermute.annotations.Option
+import tech.grimm.wintermute.commands.ChatCommand
 import tech.grimm.wintermute.services.ExchangeRateService
 import tech.grimm.wintermute.utils.Currency
 import java.time.Instant
@@ -70,8 +71,7 @@ import java.time.Instant
         Choice("United States Dollar", "USD")
     ])
 ])
-class ExchangeRateChatInputCommand(private val exchangeRateService: ExchangeRateService):
-    tech.grimm.wintermute.commands.ChatInputCommand {
+class ExchangeRateChatCommand(private val exchangeRateService: ExchangeRateService): ChatCommand {
 
     override fun handle(event: ChatInputInteractionEvent): Mono<Void> {
 

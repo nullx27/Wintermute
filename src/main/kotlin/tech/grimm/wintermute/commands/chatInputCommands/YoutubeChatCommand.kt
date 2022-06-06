@@ -7,6 +7,7 @@ import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import reactor.core.publisher.Mono
 import tech.grimm.wintermute.annotations.ChatInputCommand
 import tech.grimm.wintermute.annotations.Option
+import tech.grimm.wintermute.commands.ChatCommand
 import tech.grimm.wintermute.services.YoutubeService
 
 @ChatInputCommand(
@@ -14,8 +15,7 @@ import tech.grimm.wintermute.services.YoutubeService
     "Serach for youtube video",
     [Option("search", "Search Term", ApplicationCommandOption.Type.STRING, true)]
 )
-class YoutubeChatInputCommand(private val youtubeService: YoutubeService) :
-    tech.grimm.wintermute.commands.ChatInputCommand {
+class YoutubeChatCommand(private val youtubeService: YoutubeService) : ChatCommand {
     override fun handle(event: ChatInputInteractionEvent): Mono<Void> {
 
         val search = event.getOption("search")

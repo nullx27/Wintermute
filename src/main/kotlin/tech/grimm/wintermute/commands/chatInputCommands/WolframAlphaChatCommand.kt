@@ -8,39 +8,39 @@ import discord4j.core.spec.EmbedCreateSpec
 import reactor.core.publisher.Mono
 import tech.grimm.wintermute.annotations.ChatInputCommand
 import tech.grimm.wintermute.annotations.Option
+import tech.grimm.wintermute.commands.ChatCommand
 import tech.grimm.wintermute.services.WolframAlphaService
 
 @ChatInputCommand(
     "wolframalpha",
     "Query WolframAlpha",
-    [Option("term", "Calculation", ApplicationCommandOption.Type.STRING, true)]
+    [Option("input", "Calculation Input", ApplicationCommandOption.Type.STRING, true)]
 )
-class WolframAlphaChatInputCommand(private val wolframAlphaService: WolframAlphaService) :
-    tech.grimm.wintermute.commands.ChatInputCommand {
+class WolframAlphaChatCommand(private val wolframAlphaService: WolframAlphaService) : ChatCommand {
     override fun handle(event: ChatInputInteractionEvent): Mono<Void> {
-        val term = event.getOption("term")
+        val input = event.getOption("input")
             .flatMap { obj: ApplicationCommandInteractionOption -> obj.value }
             .map { obj: ApplicationCommandInteractionOptionValue -> obj.asString() }
             .get()
 
-        val result = wolframAlphaService.execute(term)
-        if (result.queryresult?.success == false) return event.reply().withContent("No Result")
+        val result = wolframAlphaService.execute(input)
+        if (!result.queryresult.success) return event.reply().withContent("No Result")
 
         val embed = EmbedCreateSpec.builder()
             .author("Wolfram|Alpha", "https://www.wolframalpha.com/", "https://i.imgur.com/YVWvjlM.png")
 
-        for (pod in result.queryresult?.pods!!) {
+        for (pod in result.queryresult.pods) {
             when (pod.id) {
                 "Input", "Result" -> embed.addField(
-                    pod.title.toString(),
-                    pod.subpods?.get(0)?.plaintext.toString(),
+                    pod.title,
+                    pod.subpods[0].plaintext,
                     false
                 )
-                "Plot" -> embed.image(pod.subpods?.get(0)?.img?.src.toString())
+                "Plot" -> embed.image(pod.subpods[0].img.src)
             }
         }
 
-        return event.reply().withEmbeds(embed.build());
+        return event.reply().withEmbeds(embed.build())
     }
 
 }
