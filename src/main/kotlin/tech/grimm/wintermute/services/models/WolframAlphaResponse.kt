@@ -1,82 +1,76 @@
 package tech.grimm.wintermute.services.models
 
+data class Assumptions(
+    var type: String,
+    var template: String,
+    var count: Int,
+    var values: ArrayList<Value>
+)
 
+data class Img(
+    var src: String,
+    var alt: String,
+    var title: String,
+    var width: Int,
+    var height: Int,
+    var type: String,
+    var themes: String,
+    var colorinvertable: Boolean,
+    var contenttype: String,
+)
 
-class Assumptions {
-    var type: String? = null
-    var template: String? = null
-    var count = 0
-    var values: ArrayList<Value>? = null
-}
+data class Pod(
+    var title: String,
+    var scanner: String,
+    var id: String,
+    var position: Int,
+    var error: Boolean,
+    var numsubpods: Int,
+    var subpods: ArrayList<Subpod>,
+    var expressiontypes: Any, //this is a workaround b/c wolframalpha api returns inconsistent types here
+    var primary: Boolean,
+    var states: ArrayList<State>,
+)
 
-class Expressiontypes {
-    var name: String? = null
-}
+data class Queryresult(
+    var success: Boolean,
+    var error: Boolean,
+    var numpods: Int,
+    var datatypes: String,
+    var timedout: String,
+    var timedoutpods: String,
+    var timing: Float,
+    var parsetiming: Float,
+    var parsetimedout: Boolean,
+    var recalculate: String,
+    var id: String,
+    var host: String,
+    var server: String,
+    var related: String,
+    var version: String,
+    var inputstring: String,
+    var pods: ArrayList<Pod>,
+    var assumptions: Assumptions,
+)
 
-class Img {
-    var src: String? = null
-    var alt: String? = null
-    var title: String? = null
-    var width = 0
-    var height = 0
-    var type: String? = null
-    var themes: String? = null
-    var colorinvertable = false
-    var contenttype: String? = null
-}
+data class WolframAlphaResponse(
+    var queryresult: Queryresult,
+)
 
-class Pod {
-    var title: String? = null
-    var scanner: String? = null
-    var id: String? = null
-    var position = 0
-    var error = false
-    var numsubpods = 0
-    var subpods: ArrayList<Subpod>? = null
-    var expressiontypes: Array<Expressiontypes>? = null
-    var primary = false
-    var states: ArrayList<State>? = null
-}
+data class State(
+    var name: String,
+    var input: String,
+    var stepbystep: Boolean,
+)
 
-class Queryresult {
-    var success = false
-    var error = false
-    var numpods = 0
-    var datatypes: String? = null
-    var timedout: String? = null
-    var timedoutpods: String? = null
-    var timing = 0.0
-    var parsetiming = 0.0
-    var parsetimedout = false
-    var recalculate: String? = null
-    var id: String? = null
-    var host: String? = null
-    var server: String? = null
-    var related: String? = null
-    var version: String? = null
-    var inputstring: String? = null
-    var pods: ArrayList<Pod>? = null
-    var assumptions: Assumptions? = null
-}
+class Subpod(
+    var title: String,
+    var img: Img,
+    var plaintext: String,
+)
 
-class WolframAlphaResponse {
-    var queryresult: Queryresult? = null
-}
-
-class State {
-    var name: String? = null
-    var input: String? = null
-    var stepbystep = false
-}
-
-class Subpod {
-    var title: String? = null
-    var img: Img? = null
-    var plaintext: String? = null
-}
-
-class Value {
-    var name: String? = null
-    var desc: String? = null
-    var input: String? = null
-}
+data class Value(
+    var name: String,
+    var desc: String,
+    var input: String,
+)
