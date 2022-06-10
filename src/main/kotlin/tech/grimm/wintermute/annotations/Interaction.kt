@@ -1,10 +1,10 @@
 package tech.grimm.wintermute.annotations
 
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Indexed
+
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
-@Interaction
-@Component
-annotation class MessageCommand(val name: String)
+@Indexed
+annotation class Interaction()

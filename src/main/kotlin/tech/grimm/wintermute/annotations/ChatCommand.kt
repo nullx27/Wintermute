@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
+@Interaction
 @Component
-annotation class ChatInputCommand(val name: String, val description: String, val options: Array<Option> = []) {
+annotation class ChatCommand(val name: String, val description: String, val options: Array<Option> = []) {
 
 }

@@ -1,9 +1,9 @@
-package tech.grimm.wintermute.commands.messageInteractions
+package tech.grimm.wintermute.interactions.message
 
 import discord4j.core.event.domain.interaction.MessageInteractionEvent
 import reactor.core.publisher.Mono
 import tech.grimm.wintermute.annotations.MessageCommand
-import tech.grimm.wintermute.commands.MessageInteraction
+import tech.grimm.wintermute.interactions.MessageInteraction
 
 @MessageCommand("Archive")
 class ArchiveMessageInteraction: MessageInteraction {

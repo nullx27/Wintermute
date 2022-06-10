@@ -57,7 +57,7 @@ class Discord(
 
     private fun <T : Event> registerHandler(event: Class<T>, client: GatewayDiscordClient, handler: Handler<T>) {
         client.on(event)
-            .doOnNext { e -> logger.info("Handled $e.") }
+            .doOnNext { e -> logger.info("Handled ${e::class.java}.") }
             .flatMap { e -> handler.handle(e, client.restClient) }
             .onErrorResume { err -> Mono.fromRunnable { logger.error("$err") } }
             .subscribe()

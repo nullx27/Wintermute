@@ -1,4 +1,4 @@
-package tech.grimm.wintermute.commands.chatInputCommands
+package tech.grimm.wintermute.interactions.chat
 
 import discord4j.core.`object`.command.ApplicationCommandInteractionOption
 import discord4j.core.`object`.command.ApplicationCommandInteractionOptionValue
@@ -7,16 +7,16 @@ import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.spec.EmbedCreateSpec
 import discord4j.rest.util.Color
 import reactor.core.publisher.Mono
-import tech.grimm.wintermute.annotations.ChatInputCommand
+import tech.grimm.wintermute.annotations.ChatCommand
 import tech.grimm.wintermute.annotations.Choice
 import tech.grimm.wintermute.annotations.Option
-import tech.grimm.wintermute.commands.ChatCommand
+import tech.grimm.wintermute.interactions.ChatInteraction
 import tech.grimm.wintermute.services.ExchangeRateService
 import tech.grimm.wintermute.utils.Currency
 import java.time.Instant
 
 
-@ChatInputCommand("exchange", "Exchange Rates for Currencies", [
+@ChatCommand("exchange", "Exchange Rates for Currencies", [
     Option("amount", "Currency Amount", ApplicationCommandOption.Type.NUMBER, true),
     Option("from", "Base Currency", ApplicationCommandOption.Type.STRING, true,[
         Choice("Australia Dollar", "AUD"),
@@ -71,7 +71,7 @@ import java.time.Instant
         Choice("United States Dollar", "USD")
     ])
 ])
-class ExchangeRateChatCommand(private val exchangeRateService: ExchangeRateService): ChatCommand {
+class ExchangeRateChatInteraction(private val exchangeRateService: ExchangeRateService): ChatInteraction {
 
     override fun handle(event: ChatInputInteractionEvent): Mono<Void> {
 

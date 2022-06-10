@@ -7,10 +7,12 @@ import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
 @ComponentScan(
-    *["tech.grimm.wintermute.components",
-        "tech.grimm.wintermute.commands",
+    *[
+        "tech.grimm.wintermute.components",
+        "tech.grimm.wintermute.interactions",
         "tech.grimm.wintermute.handlers",
-        "tech.grimm.wintermute.services"]
+        "tech.grimm.wintermute.services"
+    ]
 )
 class WintermuteApplication
 

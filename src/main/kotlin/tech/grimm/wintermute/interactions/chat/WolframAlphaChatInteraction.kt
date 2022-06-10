@@ -1,4 +1,4 @@
-package tech.grimm.wintermute.commands.chatInputCommands
+package tech.grimm.wintermute.interactions.chat
 
 import discord4j.core.`object`.command.ApplicationCommandInteractionOption
 import discord4j.core.`object`.command.ApplicationCommandInteractionOptionValue
@@ -6,17 +6,17 @@ import discord4j.core.`object`.command.ApplicationCommandOption
 import discord4j.core.event.domain.interaction.ChatInputInteractionEvent
 import discord4j.core.spec.EmbedCreateSpec
 import reactor.core.publisher.Mono
-import tech.grimm.wintermute.annotations.ChatInputCommand
+import tech.grimm.wintermute.annotations.ChatCommand
 import tech.grimm.wintermute.annotations.Option
-import tech.grimm.wintermute.commands.ChatCommand
+import tech.grimm.wintermute.interactions.ChatInteraction
 import tech.grimm.wintermute.services.WolframAlphaService
 
-@ChatInputCommand(
+@ChatCommand(
     "wolframalpha",
     "Query WolframAlpha",
     [Option("input", "Calculation Input", ApplicationCommandOption.Type.STRING, true)]
 )
-class WolframAlphaChatCommand(private val wolframAlphaService: WolframAlphaService) : ChatCommand {
+class WolframAlphaChatInteraction(private val wolframAlphaService: WolframAlphaService) : ChatInteraction {
     override fun handle(event: ChatInputInteractionEvent): Mono<Void> {
         val input = event.getOption("input")
             .flatMap { obj: ApplicationCommandInteractionOption -> obj.value }
