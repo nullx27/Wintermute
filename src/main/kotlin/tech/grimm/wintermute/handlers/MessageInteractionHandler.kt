@@ -13,9 +13,8 @@ class MessageInteractionHandler(private val interactions: Interactions, private 
     Handler<MessageInteractionEvent> {
 
     override fun handle(event: MessageInteractionEvent, client: RestClient): Mono<Void> {
-
         val cmd =
-            ctx.getBeansOfType(interactions.handlers[event.commandName.lowercase()]).values.first() as MessageInteraction;
+            ctx.getBeansOfType(interactions.handlers[event.commandName.lowercase()]).values.first() as MessageInteraction
         return cmd.handle(event)
     }
 }

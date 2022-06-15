@@ -13,8 +13,7 @@ class ChatInputInteractionHandler(private val interactions: Interactions, privat
     Handler<ChatInputInteractionEvent> {
 
     override fun handle(event: ChatInputInteractionEvent, client: RestClient): Mono<Void> {
-        val cmd = ctx.getBeansOfType(interactions.handlers[event.commandName]).values.first() as ChatInteraction
+        val cmd = ctx.getBeansOfType(interactions.handlers[event.commandName]).values.firstOrNull() as ChatInteraction
         return cmd.handle(event)
     }
-
 }

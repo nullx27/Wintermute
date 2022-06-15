@@ -11,8 +11,8 @@ import tech.grimm.wintermute.interactions.ChatInteraction
 import tech.grimm.wintermute.services.YoutubeService
 
 @ChatCommand(
-    "youtube",
-    "Serach for youtube video",
+    "YouTube",
+    "Serach for a YouTube Video",
     [Option("search", "Search Term", ApplicationCommandOption.Type.STRING, true)]
 )
 class YoutubeChatInteraction(private val youtubeService: YoutubeService) : ChatInteraction {

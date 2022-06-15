@@ -29,8 +29,8 @@ class Discord(
     private val logger by LoggerDelegate()
 
     @Bean
-    fun gatewayDiscordClient(config: Properties): GatewayDiscordClient? {
-        val client = DiscordClientBuilder.create(config.discordToken).build()
+    fun gatewayDiscordClient(config: Properties): GatewayDiscordClient? =
+        DiscordClientBuilder.create(config.discordToken).build()
             .gateway()
             .setEnabledIntents(IntentSet.all())
             .setAwaitConnections(false)
@@ -41,30 +41,24 @@ class Discord(
             }
             .login()
             .doOnError { e -> logger.error("Failed to log in: ", e) }
-            .doOnSuccess { logger.info("Successfully logged in!") }
+            .doOnSuccess {
+                logger.info("Successfully logged in!")
+
+                registerHandler(ReadyEvent::class.java, it, readyEventHandler)
+                registerHandler(ChatInputInteractionEvent::class.java, it, chatInputInteractionHandler)
+                registerHandler(MessageInteractionEvent::class.java, it, messageInteractionHandler)
+            }
             .block()
 
-        client!! // TODO: 26/05/2022 this needs to me made more idiomatic
-
-        registerHandler(ReadyEvent::class.java, client, readyEventHandler)
-        registerHandler(ChatInputInteractionEvent::class.java, client, chatInputInteractionHandler)
-        registerHandler(MessageInteractionEvent::class.java, client, messageInteractionHandler)
-
-        client.onDisconnect().block()
-
-        return client
-    }
-
-    private fun <T : Event> registerHandler(event: Class<T>, client: GatewayDiscordClient, handler: Handler<T>) {
+    private fun <T : Event> registerHandler(event: Class<T>, client: GatewayDiscordClient, handler: Handler<T>) =
         client.on(event)
             .doOnNext { e -> logger.info("Handled ${e::class.java}.") }
             .flatMap { e -> handler.handle(e, client.restClient) }
             .onErrorResume { err -> Mono.fromRunnable { logger.error("$err") } }
             .subscribe()
-    }
+
 
     @Bean
-    fun discordRestClient(client: GatewayDiscordClient): RestClient {
-        return client.restClient
-    }
+    fun discordRestClient(client: GatewayDiscordClient): RestClient = client.restClient
+
 }

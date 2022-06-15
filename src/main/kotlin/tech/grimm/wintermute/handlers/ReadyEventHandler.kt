@@ -8,8 +8,7 @@ import tech.grimm.wintermute.components.Interactions
 import tech.grimm.wintermute.utils.LoggerDelegate
 
 @Component
-class ReadyEventHandler(private val interactions: Interactions) :
-    Handler<ReadyEvent> {
+class ReadyEventHandler(private val interactions: Interactions) : Handler<ReadyEvent> {
 
     private val logger by LoggerDelegate()
 
@@ -31,6 +30,6 @@ class ReadyEventHandler(private val interactions: Interactions) :
         }
 
         logger.info("Logged in as ${event.self.username}")
-        return Mono.empty();
+        return Mono.empty()
     }
 }
