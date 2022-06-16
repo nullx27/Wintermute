@@ -6,10 +6,10 @@ import discord4j.discordjson.json.ApplicationCommandOptionData
 import discord4j.discordjson.json.ApplicationCommandRequest
 import discord4j.discordjson.json.ImmutableApplicationCommandRequest
 import tech.grimm.wintermute.annotations.ChatCommand
+import kotlin.reflect.KClass
 
 class ChatCommandInteractionRequest : InteractionRequest<ChatCommand> {
-    override fun create(meta: ChatCommand): ImmutableApplicationCommandRequest {
-        val request: ImmutableApplicationCommandRequest.Builder = ApplicationCommandRequest.builder()
+    override fun create(meta: ChatCommand, klass: KClass<*>?): ImmutableApplicationCommandRequest {
 
         val options: ArrayList<ApplicationCommandOptionData> = ArrayList()
 
@@ -23,7 +23,7 @@ class ChatCommandInteractionRequest : InteractionRequest<ChatCommand> {
                     .value(choice.value)
                     .build()
 
-                choices.add(ch);
+                choices.add(ch)
             }
 
             val option: ApplicationCommandOptionData = ApplicationCommandOptionData.builder()
@@ -34,12 +34,15 @@ class ChatCommandInteractionRequest : InteractionRequest<ChatCommand> {
                 .addAllChoices(choices)
                 .build()
 
-            options.add(option);
+            options.add(option)
         }
 
-        return request.name(meta.name.lowercase())
+        return ApplicationCommandRequest
+            .builder()
+            .name(meta.name.lowercase())
             .description(meta.description)
             .type(ApplicationCommand.Type.CHAT_INPUT.value)
-            .addAllOptions(options).build()
+            .addAllOptions(options)
+            .build()
     }
 }

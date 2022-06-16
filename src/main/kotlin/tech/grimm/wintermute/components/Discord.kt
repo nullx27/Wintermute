@@ -12,7 +12,6 @@ import discord4j.gateway.intent.IntentSet
 import discord4j.rest.RestClient
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Mono
 import tech.grimm.wintermute.handlers.ChatInputInteractionHandler
 import tech.grimm.wintermute.handlers.Handler
 import tech.grimm.wintermute.handlers.MessageInteractionHandler
@@ -54,7 +53,7 @@ class Discord(
         client.on(event)
             .doOnNext { e -> logger.info("Handled ${e::class.java}.") }
             .flatMap { e -> handler.handle(e, client.restClient) }
-            .onErrorResume { err -> Mono.fromRunnable { logger.error("$err") } }
+            .onErrorContinue { t, _ -> t.printStackTrace() }
             .subscribe()
 
 
